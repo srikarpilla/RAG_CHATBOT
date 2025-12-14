@@ -19,7 +19,7 @@ load_dotenv()
 
 
 class RateLimiter:
-    """Simple rate limiter to prevent API quota exhaustion."""
+    
     
     def __init__(self, max_calls_per_minute: int = 10):
         self.max_calls = max_calls_per_minute
@@ -48,7 +48,7 @@ class RateLimiter:
 
 
 class ResponseCache:
-    """Cache responses to avoid redundant API calls."""
+    #Cache responses to avoid redundant API calls.
     
     def __init__(self, cache_file: str = "response_cache.json"):
         self.cache_file = cache_file
@@ -85,7 +85,7 @@ class ResponseCache:
 
 
 class RAGChatbot:
-    """Optimized RAG Chatbot with faster initialization."""
+  
     
     def __init__(self):
         self.data_path = "data"
@@ -97,7 +97,7 @@ class RAGChatbot:
         self.cache = ResponseCache()
         self.llm = None
         
-        # Delay embeddings initialization until needed
+        # Delay embeddings initialization
         print("✅ RAG Chatbot initialized (embeddings will load on first use)")
     
     def _setup_embeddings(self):
@@ -110,7 +110,7 @@ class RAGChatbot:
         try:
             from langchain_community.embeddings import HuggingFaceEmbeddings
             
-            # Use local embeddings - completely free, no API quota issues
+         
             self.embeddings = HuggingFaceEmbeddings(
                 model_name="sentence-transformers/all-MiniLM-L6-v2",
                 model_kwargs={'device': 'cpu'},
@@ -136,7 +136,7 @@ class RAGChatbot:
         print(f"📚 Found {len(pdf_files)} PDF(s). Starting processing...")
         
         try:
-            # Ensure embeddings are loaded
+            
             self._setup_embeddings()
             
             # Load documents with progress
@@ -226,13 +226,12 @@ class RAGChatbot:
                 
                 # Configure genai to list available models
                 genai.configure(api_key=api_key)
-                
-                # Try different model names (based on available models in your API)
+               
                 models_to_try = [
-                    "models/gemini-2.5-flash",      # Newest, fastest
-                    "models/gemini-2.0-flash",      # Stable version
-                    "models/gemini-flash-latest",   # Latest alias
-                    "models/gemini-pro-latest",     # Pro version alias
+                    "models/gemini-2.5-flash",      
+                    "models/gemini-2.0-flash",     
+                    "models/gemini-flash-latest",   
+                    "models/gemini-pro-latest",     
                 ]
                 
                 last_error = None
@@ -245,7 +244,7 @@ class RAGChatbot:
                             temperature=0.3,
                             max_output_tokens=1024
                         )
-                        # Test the model with a simple query
+                       
                         test_result = self.llm.invoke("Hi")
                         print(f"✅ AI model ready: {model_name}")
                         break
@@ -254,13 +253,13 @@ class RAGChatbot:
                         error_str = str(e).lower()
                         if "not found" in error_str or "404" in error_str or "not supported" in error_str:
                             print(f"   ❌ {model_name} not available")
-                            continue  # Try next model
+                            continue 
                         else:
-                            # Different error (maybe quota), don't retry
+                           
                             print(f"   ⚠️ Error with {model_name}: {str(e)[:100]}")
                             raise
                 else:
-                    # None of the models worked, list available models
+                   
                     print("\n❌ Could not initialize any model.")
                     print("\n🔍 Checking available models for your API key...\n")
                     try:
@@ -445,4 +444,5 @@ if __name__ == "__main__":
         print("✅ Found existing database\n")
         chatbot.setup_chain()
     else:
+
         print("⚠️ No database found. Run ingestion first.\n")
