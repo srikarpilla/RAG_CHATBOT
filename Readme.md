@@ -4,7 +4,7 @@ A retrieval-augmented generation (RAG) chatbot that allows users to chat with th
 
  Project Demo
 Watch the full working demo of the application here:  
-DEPLOYED WEBSITE LINK:https://ragchatbot-ybbddsjzrpquziut8phhai.streamlit.app/
+DEPLOYED WEBSITE LINK:https:https://48bmrkj42mjvxqmytqetci.streamlit.app/
 
 [Watch Demo Video on Loom](https://www.loom.com/share/92d134caff274a94866bd28f1fbbfdbd)
 
